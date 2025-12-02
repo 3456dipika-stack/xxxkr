@@ -13,9 +13,7 @@ declare global {
 }
 
 const MONGODB_URIS = [
-  "mongodb+srv://g36plmn_db_user:gnQnhSzenkQ3gtYn@cluster0.aefevza.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-  "mongodb+srv://l6yml41j_db_user:2m5HFR6CTdSb46ck@cluster0.nztdqdr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-  "mongodb+srv://7afcwd6_db_user:sOthaH9f53BDRBoj@cluster0.m9d2zcy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  "mongodb+srv://wspprp42_db_user:Mac4xZJVHOxkKzK0@cluster0.cgxjhpt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
 ];
 
 /**
