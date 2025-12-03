@@ -165,7 +165,10 @@ export default function Page(props: PageProps) {
     <div className="min-h-screen bg-gray-900 text-white">
       <header className="sticky top-0 z-50 bg-gray-800/80 p-4 shadow-lg backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
-          <h1 className="text-2xl font-bold text-red-600 sm:text-3xl" style={{ cursor: 'pointer' }} onClick={() => router.push('/1')}>XXXKR</h1>
+          <div className="flex items-center gap-2">
+            <Image src="https://i.ibb.co/xKcN1nSL/IMG-20251027-WA0002.jpg" alt="logo" width={40} height={40} className="rounded-full" />
+            <h1 className="text-2xl font-bold text-red-600 sm:text-3xl" style={{ cursor: 'pointer' }} onClick={() => router.push('/1')}>XXXKR</h1>
+          </div>
           <form onSubmit={handleSearchSubmit} className="flex w-full items-center sm:w-auto">
             <input
               type="text"
