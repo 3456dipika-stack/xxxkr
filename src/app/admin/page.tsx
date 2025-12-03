@@ -190,21 +190,40 @@ export default function AdminPage() {
 
   const handleImagePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
     const items = event.clipboardData.items;
-    for (const index in items) {
-      const item = items[index];
-      if (item.kind === 'file') {
-        const blob = item.getAsFile();
-        if (blob && blob.type.includes('image')) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            if (e.target && typeof e.target.result === 'string') {
-              setImageLink(e.target.result);
-            }
-          };
-          reader.readAsDataURL(blob);
-          event.preventDefault(); // Prevent pasting file path
-        }
+    let file = null;
+
+    // Find the first file in the clipboard items
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].kind === 'file') {
+        file = items[i].getAsFile();
+        break;
       }
+    }
+
+    if (file) {
+      // Prevent the default paste action (e.g., pasting file path)
+      event.preventDefault();
+
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const result = e.target?.result;
+        if (typeof result === 'string' && result.startsWith('data:image')) {
+          // It's a valid image data URL
+          setImageLink(result);
+          setMessage('Image pasted successfully!');
+        } else {
+          // The file is not an image
+          setMessage('Pasted file is not a supported image. Please paste an image file.');
+        }
+      };
+
+      reader.onerror = () => {
+        setMessage('Failed to read the pasted file. Please try again.');
+      };
+
+      // Read the file as a Data URL
+      reader.readAsDataURL(file);
     }
   };
 
