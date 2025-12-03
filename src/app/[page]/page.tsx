@@ -168,6 +168,9 @@ export default function Page(props: PageProps) {
           <div className="flex items-center gap-2">
             <Image src="https://i.ibb.co/xKcN1nSL/IMG-20251027-WA0002.jpg" alt="logo" width={40} height={40} className="rounded-full" />
             <h1 className="text-2xl font-bold text-red-600 sm:text-3xl" style={{ cursor: 'pointer' }} onClick={() => router.push('/1')}>XXXKR</h1>
+            <a href="https://wa.me/7439431956" target="_blank" rel="noopener noreferrer" className="ml-4 text-sm font-medium text-white bg-green-600 px-3 py-1 rounded-md hover:bg-green-700">
+              Contact admin
+            </a>
           </div>
           <form onSubmit={handleSearchSubmit} className="flex w-full items-center sm:w-auto">
             <input
