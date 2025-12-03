@@ -188,6 +188,45 @@ export default function AdminPage() {
     }
   };
 
+  const handleImagePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+    const items = event.clipboardData.items;
+    let file = null;
+
+    // Find the first file in the clipboard items
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].kind === 'file') {
+        file = items[i].getAsFile();
+        break;
+      }
+    }
+
+    if (file) {
+      // Prevent the default paste action (e.g., pasting file path)
+      event.preventDefault();
+
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const result = e.target?.result;
+        if (typeof result === 'string' && result.startsWith('data:image')) {
+          // It's a valid image data URL
+          setImageLink(result);
+          setMessage('Image pasted successfully!');
+        } else {
+          // The file is not an image
+          setMessage('Pasted file is not a supported image. Please paste an image file.');
+        }
+      };
+
+      reader.onerror = () => {
+        setMessage('Failed to read the pasted file. Please try again.');
+      };
+
+      // Read the file as a Data URL
+      reader.readAsDataURL(file);
+    }
+  };
+
   if (isLoading && !isAuthenticated) {
     return <div className="flex min-h-screen items-center justify-center bg-gray-900 text-white">Loading...</div>;
   }
@@ -208,7 +247,7 @@ export default function AdminPage() {
           <h1 className="mb-6 text-center text-2xl font-bold sm:text-3xl">{editingMovieId ? 'Edit Movie' : 'Add New Movie'}</h1>
           {message && <p className="mb-4 text-center text-green-400">{message}</p>}
           <div className="mb-4"><input type="text" value={movieName} onChange={(e) => setMovieName(e.target.value)} placeholder="Movie Name" required className="w-full rounded-md border border-gray-600 bg-gray-700 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-500" /></div>
-          <div className="mb-4"><input type="text" value={imageLink} onChange={(e) => setImageLink(e.target.value)} placeholder="Image Link" required className="w-full rounded-md border border-gray-600 bg-gray-700 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-500" /></div>
+          <div className="mb-4"><input type="text" value={imageLink} onChange={(e) => setImageLink(e.target.value)} onPaste={handleImagePaste} placeholder="Image Link or Paste Image" required className="w-full rounded-md border border-gray-600 bg-gray-700 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-500" /></div>
 
           {/* New Download Link Fields */}
           <div className="mb-2"><input type="text" value={link480p} onChange={(e) => setLink480p(e.target.value)} placeholder="Download Link (480p)" className="w-full rounded-md border border-gray-600 bg-gray-700 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-500" /></div>
