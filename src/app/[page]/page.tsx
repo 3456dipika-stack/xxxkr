@@ -196,6 +196,7 @@ export default function Page(props: PageProps) {
           </div>
         ) : (
           <div className="flex flex-col gap-8">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4">
             {movies.map((movie) => (
               <Link key={movie._id} href={`/movie/${movie._id}`} className="group flex flex-col sm:flex-row items-start bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl">
                 <div className="relative w-full sm:w-48 aspect-video sm:aspect-[2/3] flex-shrink-0">
