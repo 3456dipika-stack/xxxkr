@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import Image from 'next/image';
 
 interface Movie {
   _id: string;
@@ -19,6 +18,7 @@ export default function MovieDetailsPage() {
   const [movie, setMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedQuality, setSelectedQuality] = useState<string | null>(null);
 
   const params = useParams();
   const { id } = params;
@@ -33,6 +33,16 @@ export default function MovieDetailsPage() {
           const data = await res.json();
           if (data.success) {
             setMovie(data.data);
+            // Set default video quality
+            if (data.data.downloadLinks) {
+              if (data.data.downloadLinks.p1080) {
+                setSelectedQuality(data.data.downloadLinks.p1080);
+              } else if (data.data.downloadLinks.p720) {
+                setSelectedQuality(data.data.downloadLinks.p720);
+              } else if (data.data.downloadLinks.p480) {
+                setSelectedQuality(data.data.downloadLinks.p480);
+              }
+            }
           } else {
             setError(data.message || 'Failed to load movie details.');
           }
@@ -61,33 +71,43 @@ export default function MovieDetailsPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 sm:p-8">
       <div className="mx-auto max-w-4xl">
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="md:w-1/3">
-            <Image
-              src={movie.image}
-              alt={movie.name}
-              width={500}
-              height={750}
-              className="w-full h-auto rounded-lg shadow-lg"
-            />
-          </div>
-          <div className="md:w-2/3">
+        <div className="flex flex-col">
+          <div className="w-full">
             <h1 className="text-4xl font-bold mb-4">{movie.name}</h1>
+
+            {selectedQuality && (
+              <div className="mb-4">
+                <video key={selectedQuality} controls className="w-full rounded-lg">
+                  <source src={`/api/proxy?url=${encodeURIComponent(selectedQuality)}`} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            )}
+
             <div className="space-y-4">
               {movie.downloadLinks.p480 && (
-                <a href={movie.downloadLinks.p480} target="_blank" rel="noopener noreferrer" className="block w-full text-center rounded-md bg-red-600 px-4 py-3 font-bold text-white hover:bg-red-700">
-                  Download 480p
-                </a>
+                <button
+                  onClick={() => setSelectedQuality(movie.downloadLinks.p480 as string)}
+                  className={`block w-full text-center rounded-md px-4 py-3 font-bold text-white ${selectedQuality === movie.downloadLinks.p480 ? 'bg-red-800' : 'bg-red-600 hover:bg-red-700'}`}
+                >
+                  Play 480p
+                </button>
               )}
               {movie.downloadLinks.p720 && (
-                <a href={movie.downloadLinks.p720} target="_blank" rel="noopener noreferrer" className="block w-full text-center rounded-md bg-red-600 px-4 py-3 font-bold text-white hover:bg-red-700">
-                  Download 720p
-                </a>
+                <button
+                  onClick={() => setSelectedQuality(movie.downloadLinks.p720 as string)}
+                  className={`block w-full text-center rounded-md px-4 py-3 font-bold text-white ${selectedQuality === movie.downloadLinks.p720 ? 'bg-red-800' : 'bg-red-600 hover:bg-red-700'}`}
+                >
+                  Play 720p
+                </button>
               )}
               {movie.downloadLinks.p1080 && (
-                <a href={movie.downloadLinks.p1080} target="_blank" rel="noopener noreferrer" className="block w-full text-center rounded-md bg-red-600 px-4 py-3 font-bold text-white hover:bg-red-700">
-                  Download 1080p
-                </a>
+                <button
+                  onClick={() => setSelectedQuality(movie.downloadLinks.p1080 as string)}
+                  className={`block w-full text-center rounded-md px-4 py-3 font-bold text-white ${selectedQuality === movie.downloadLinks.p1080 ? 'bg-red-800' : 'bg-red-600 hover:bg-red-700'}`}
+                >
+                  Play 1080p
+                </button>
               )}
             </div>
           </div>
