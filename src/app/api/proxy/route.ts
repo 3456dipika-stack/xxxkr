@@ -1,0 +1,43 @@
+
+import { NextRequest, NextResponse } from 'next/server';
+
+const ALLOWED_DOMAIN = 'bot2-g3xn.onrender.com';
+
+export async function GET(req: NextRequest) {
+  const videoUrl = req.nextUrl.searchParams.get('url');
+
+  if (!videoUrl) {
+    return new NextResponse('Missing url parameter', { status: 400 });
+  }
+
+  try {
+    const url = new URL(videoUrl);
+    if (url.hostname !== ALLOWED_DOMAIN) {
+        return new NextResponse('Forbidden: Hostname not allowed', { status: 403 });
+    }
+
+    const videoResponse = await fetch(videoUrl);
+
+    if (!videoResponse.ok) {
+      return new NextResponse('Failed to fetch video', { status: videoResponse.status });
+    }
+
+    const headers = new Headers(videoResponse.headers);
+    headers.set('Access-Control-Allow-Origin', '*');
+
+    return new NextResponse(videoResponse.body, {
+      status: videoResponse.status,
+      statusText: videoResponse.statusText,
+      headers,
+    });
+  } catch (error) {
+    if (error instanceof TypeError) {
+        return new NextResponse('Invalid URL format', { status: 400 });
+    }
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    return new NextResponse(JSON.stringify({ success: false, message: 'Server Error', error: errorMessage }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}

@@ -195,15 +195,15 @@ export default function Page(props: PageProps) {
             <p>No movies found.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+          <div className="flex flex-col items-center gap-y-8">
             {movies.map((movie) => (
-              <Link key={movie._id} href={`/movie/${movie._id}`} className="block group">
-                <div className="relative aspect-[2/3] overflow-hidden rounded-lg shadow-lg bg-gray-800">
+              <Link key={movie._id} href={`/movie/${movie._id}`} className="block group w-full max-w-sm">
+                <div className="relative aspect-video overflow-hidden rounded-lg shadow-lg bg-gray-800">
                   <Image
                     src={movie.image}
                     alt={movie.name}
                     fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16.6vw"
+                    sizes="100vw"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                     loading="lazy"
                   />
