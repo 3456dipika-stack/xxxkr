@@ -88,7 +88,11 @@ export default function MovieDetailsPage() {
             {selectedQuality && (
               <div className="mb-4">
                 <video key={selectedQuality} controls className="w-full rounded-lg">
-                  <source src={selectedQuality} type="video/mp4" />
+ feature/in-browser-media-player-proxy
+                  <source src={`/api/proxy?url=${encodeURIComponent(selectedQuality)}`} type="video/mp4" />
+
+
+main
                   Your browser does not support the video tag.
                 </video>
               </div>
