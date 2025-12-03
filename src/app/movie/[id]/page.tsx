@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import Image from 'next/image';
 
 interface Movie {
   _id: string;
@@ -72,27 +71,22 @@ export default function MovieDetailsPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 sm:p-8">
       <div className="mx-auto max-w-4xl">
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="md:w-1/3">
-            <Image
-              src={movie.image}
-              alt={movie.name}
-              width={500}
-              height={750}
-              className="w-full h-auto rounded-lg shadow-lg"
-            />
-          </div>
-          <div className="md:w-2/3">
+        <div className="flex flex-col">
+          <div className="w-full">
             <h1 className="text-4xl font-bold mb-4">{movie.name}</h1>
 
             {selectedQuality && (
               <div className="mb-4">
                 <video key={selectedQuality} controls className="w-full rounded-lg">
+
+                
+
  feature/in-browser-media-player-proxy
                   <source src={`/api/proxy?url=${encodeURIComponent(selectedQuality)}`} type="video/mp4" />
 
 
 main
+
                   Your browser does not support the video tag.
                 </video>
               </div>
