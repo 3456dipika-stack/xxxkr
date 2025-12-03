@@ -195,20 +195,23 @@ export default function Page(props: PageProps) {
             <p>No movies found.</p>
           </div>
         ) : (
+          <div className="flex flex-col gap-8">
           <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4">
             {movies.map((movie) => (
-              <Link key={movie._id} href={`/movie/${movie._id}`} className="block group">
-                <div className="relative aspect-[2/3] overflow-hidden rounded-lg shadow-lg bg-gray-800">
+              <Link key={movie._id} href={`/movie/${movie._id}`} className="group flex flex-col sm:flex-row items-start bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl">
+                <div className="relative w-full sm:w-48 aspect-video sm:aspect-[2/3] flex-shrink-0">
                   <Image
                     src={movie.image}
                     alt={movie.name}
                     fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16.6vw"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, 192px"
+                    className="object-cover"
                     loading="lazy"
                   />
                 </div>
-                <p className="mt-2 text-sm font-bold text-white line-clamp-2 transition-colors duration-300 group-hover:text-red-400">{movie.name}</p>
+                <div className="p-4 flex flex-col justify-start flex-1">
+                  <p className="text-lg font-bold text-white transition-colors duration-300 group-hover:text-red-400 line-clamp-3">{movie.name}</p>
+                </div>
               </Link>
             ))}
           </div>
