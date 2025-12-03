@@ -3,7 +3,7 @@ import { serialize } from 'cookie';
 import { NextRequest, NextResponse } from 'next/server';
 
 const JWT_SECRET = "a-secure-and-random-secret-for-jwt";
-const ADMIN_PASSWORD = "abd123abd";
+const ADMIN_PASSWORD = "lovereddy";
 
 export async function POST(req: NextRequest) {
   try {
