@@ -188,6 +188,26 @@ export default function AdminPage() {
     }
   };
 
+  const handleImagePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+    const items = event.clipboardData.items;
+    for (const index in items) {
+      const item = items[index];
+      if (item.kind === 'file') {
+        const blob = item.getAsFile();
+        if (blob && blob.type.includes('image')) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            if (e.target && typeof e.target.result === 'string') {
+              setImageLink(e.target.result);
+            }
+          };
+          reader.readAsDataURL(blob);
+          event.preventDefault(); // Prevent pasting file path
+        }
+      }
+    }
+  };
+
   if (isLoading && !isAuthenticated) {
     return <div className="flex min-h-screen items-center justify-center bg-gray-900 text-white">Loading...</div>;
   }
@@ -208,7 +228,7 @@ export default function AdminPage() {
           <h1 className="mb-6 text-center text-2xl font-bold sm:text-3xl">{editingMovieId ? 'Edit Movie' : 'Add New Movie'}</h1>
           {message && <p className="mb-4 text-center text-green-400">{message}</p>}
           <div className="mb-4"><input type="text" value={movieName} onChange={(e) => setMovieName(e.target.value)} placeholder="Movie Name" required className="w-full rounded-md border border-gray-600 bg-gray-700 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-500" /></div>
-          <div className="mb-4"><input type="text" value={imageLink} onChange={(e) => setImageLink(e.target.value)} placeholder="Image Link" required className="w-full rounded-md border border-gray-600 bg-gray-700 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-500" /></div>
+          <div className="mb-4"><input type="text" value={imageLink} onChange={(e) => setImageLink(e.target.value)} onPaste={handleImagePaste} placeholder="Image Link or Paste Image" required className="w-full rounded-md border border-gray-600 bg-gray-700 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-500" /></div>
 
           {/* New Download Link Fields */}
           <div className="mb-2"><input type="text" value={link480p} onChange={(e) => setLink480p(e.target.value)} placeholder="Download Link (480p)" className="w-full rounded-md border border-gray-600 bg-gray-700 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-500" /></div>
