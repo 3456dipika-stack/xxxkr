@@ -195,7 +195,7 @@ export default function Page(props: PageProps) {
             <p>No movies found.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4">
             {movies.map((movie) => (
               <Link key={movie._id} href={`/movie/${movie._id}`} className="block group">
                 <div className="relative aspect-[2/3] overflow-hidden rounded-lg shadow-lg bg-gray-800">
