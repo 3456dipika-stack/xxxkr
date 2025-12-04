@@ -94,28 +94,55 @@ main
 
             <div className="space-y-4">
               {movie.downloadLinks.p480 && (
-                <button
-                  onClick={() => setSelectedQuality(movie.downloadLinks.p480 as string)}
-                  className={`block w-full text-center rounded-md px-4 py-3 font-bold text-white ${selectedQuality === movie.downloadLinks.p480 ? 'bg-red-800' : 'bg-red-600 hover:bg-red-700'}`}
-                >
-                  Play 480p
-                </button>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => setSelectedQuality(movie.downloadLinks.p480 as string)}
+                    className={`flex-grow text-center rounded-md px-4 py-3 font-bold text-white ${selectedQuality === movie.downloadLinks.p480 ? 'bg-red-800' : 'bg-red-600 hover:bg-red-700'}`}
+                  >
+                    Play 480p
+                  </button>
+                  <a
+                    href={movie.downloadLinks.p480}
+                    download
+                    className="flex items-center justify-center rounded-md px-4 py-3 font-bold text-white bg-green-600 hover:bg-green-700 w-auto"
+                  >
+                    Download
+                  </a>
+                </div>
               )}
               {movie.downloadLinks.p720 && (
-                <button
-                  onClick={() => setSelectedQuality(movie.downloadLinks.p720 as string)}
-                  className={`block w-full text-center rounded-md px-4 py-3 font-bold text-white ${selectedQuality === movie.downloadLinks.p720 ? 'bg-red-800' : 'bg-red-600 hover:bg-red-700'}`}
-                >
-                  Play 720p
-                </button>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => setSelectedQuality(movie.downloadLinks.p720 as string)}
+                    className={`flex-grow text-center rounded-md px-4 py-3 font-bold text-white ${selectedQuality === movie.downloadLinks.p720 ? 'bg-red-800' : 'bg-red-600 hover:bg-red-700'}`}
+                  >
+                    Play 720p
+                  </button>
+                  <a
+                    href={movie.downloadLinks.p720}
+                    download
+                    className="flex items-center justify-center rounded-md px-4 py-3 font-bold text-white bg-green-600 hover:bg-green-700 w-auto"
+                  >
+                    Download
+                  </a>
+                </div>
               )}
               {movie.downloadLinks.p1080 && (
-                <button
-                  onClick={() => setSelectedQuality(movie.downloadLinks.p1080 as string)}
-                  className={`block w-full text-center rounded-md px-4 py-3 font-bold text-white ${selectedQuality === movie.downloadLinks.p1080 ? 'bg-red-800' : 'bg-red-600 hover:bg-red-700'}`}
-                >
-                  Play 1080p
-                </button>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => setSelectedQuality(movie.downloadLinks.p1080 as string)}
+                    className={`flex-grow text-center rounded-md px-4 py-3 font-bold text-white ${selectedQuality === movie.downloadLinks.p1080 ? 'bg-red-800' : 'bg-red-600 hover:bg-red-700'}`}
+                  >
+                    Play 1080p
+                  </button>
+                  <a
+                    href={movie.downloadLinks.p1080}
+                    download
+                    className="flex items-center justify-center rounded-md px-4 py-3 font-bold text-white bg-green-600 hover:bg-green-700 w-auto"
+                  >
+                    Download
+                  </a>
+                </div>
               )}
             </div>
           </div>
