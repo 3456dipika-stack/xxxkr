@@ -29,6 +29,7 @@ export default function Page(props: PageProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState(1);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const [searchInputValue, setSearchInputValue] = useState('');
 
@@ -162,52 +163,59 @@ export default function Page(props: PageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <header className="sticky top-0 z-50 bg-gray-800/80 p-4 shadow-lg backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <Image src="https://i.ibb.co/xKcN1nSL/IMG-20251027-WA0002.jpg" alt="logo" width={40} height={40} className="rounded-full" />
-            <h1 className="text-2xl font-bold text-red-600 sm:text-3xl" style={{ cursor: 'pointer' }} onClick={() => router.push('/1')}>XXXKR</h1>
-            <a href="https://wa.me/7439431956" target="_blank" rel="noopener noreferrer" className="ml-4 text-sm font-medium text-white bg-green-600 px-3 py-1 rounded-md hover:bg-green-700">
-              Contact admin
-            </a>
-          </div>
-          <form onSubmit={handleSearchSubmit} className="flex w-full items-center sm:w-auto">
+    <div className={isDarkMode ? "dark" : ""}>
+      <div className="min-h-screen bg-white text-gray-800 dark:bg-gray-900 dark:text-white">
+        <header className="sticky top-0 z-50 bg-white/80 p-4 shadow-lg backdrop-blur-md dark:bg-gray-800/80">
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <Image src="https://i.ibb.co/xKcN1nSL/IMG-20251027-WA0002.jpg" alt="logo" width={40} height={40} className="rounded-full" />
+              <h1 className="text-2xl font-bold text-red-600 sm:text-3xl" style={{ cursor: 'pointer' }} onClick={() => router.push('/1')}>XXXKR</h1>
+              <a href="https://wa.me/7439431956" target="_blank" rel="noopener noreferrer" className="ml-4 text-sm font-medium text-white bg-green-600 px-3 py-1 rounded-md hover:bg-green-700">
+                Contact admin
+              </a>
+            </div>
+            <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="rounded-md bg-gray-200 px-3 py-2 text-gray-800 dark:bg-gray-700 dark:text-white"
+            >
+              {isDarkMode ? 'Light' : 'Dark'} Mode
+            </button>
+            <form onSubmit={handleSearchSubmit} className="flex w-full items-center sm:w-auto">
             <input
               type="text"
               value={searchInputValue}
               onChange={(e) => setSearchInputValue(e.target.value)}
               placeholder="Search for a movie..."
-              className="w-full rounded-l-md bg-gray-700 px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full rounded-l-md bg-gray-200 px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white"
             />
             <button type="submit" className="rounded-r-md bg-red-600 px-4 py-2 font-bold text-white hover:bg-red-700">
               Search
             </button>
           </form>
         </div>
-      </header>
+        </header>
 
-      <main className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
-        {loading ? (
-          <div className="flex h-64 items-center justify-center">
-            <p className="text-xl">Loading...</p>
-          </div>
-        ) : error ? (
-          <div className="text-center text-red-400">
-            <p>Error: {error}</p>
-          </div>
-        ) : movies.length === 0 ? (
-          <div className="text-center">
-            <p>No movies found.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4">
-            {movies.map((movie) => (
-              <Link key={movie._id} href={`/movie/${movie._id}`} className="block group">
-                <div className="relative aspect-[2/3] overflow-hidden rounded-lg shadow-lg bg-gray-800">
-                  <Image
-                    src={movie.image}
-                    alt={movie.name}
+        <main className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+          {loading ? (
+            <div className="flex h-64 items-center justify-center">
+              <p className="text-xl">Loading...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center text-red-400">
+              <p>Error: {error}</p>
+            </div>
+          ) : movies.length === 0 ? (
+            <div className="text-center">
+              <p>No movies found.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4">
+              {movies.map((movie) => (
+                <Link key={movie._id} href={`/movie/${movie._id}`} className="block group">
+                  <div className="relative aspect-[2/3] overflow-hidden rounded-lg shadow-lg bg-gray-200 dark:bg-gray-800">
+                    <Image
+                      src={movie.image}
+                      alt={movie.name}
                     fill
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16.6vw"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -242,6 +250,7 @@ export default function Page(props: PageProps) {
           </div>
         )}
       </main>
+    </div>
     </div>
   );
 }
