@@ -9,3 +9,23 @@
   -webkit-line-clamp: 2;
   white-space: normal;
 }
+
+.dark .dark\:bg-gray-900 {
+  background-color: #111827;
+}
+
+.dark .dark\:text-white {
+  color: #fff;
+}
+
+.dark .dark\:bg-gray-800\/80 {
+  background-color: rgba(31, 41, 55, 0.8);
+}
+
+.dark .dark\:bg-gray-700 {
+  background-color: #374151;
+}
+
+.dark .dark\:text-white {
+  color: #fff;
+}
